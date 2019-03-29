@@ -1,13 +1,15 @@
-# Usings ROS for Robotics: the fundamentals
+# Usings ROS for Robotics
 
-## start the master process
+## The fundamentals
+
+### Start the master process
 Open a terminal and issue the command:
 
 ```
 roscore
 ```
 
-## Run a node from a package
+### Run a node from a package
 Open a new terminal tab and follow:
 
 ```
@@ -21,10 +23,47 @@ To control the simulation, lets create a new node with teleoperation properties:
 rosrun turtlesim turtle_teleop_key
 ```
 
-  515  rosnode list 
-  516  rosrun turtlesim turtle_teleop_key
-  517  rosnode list
-  518  rostopic list
+### List of nodes
+Issue the following command in a terminal:
+
+```
+rosnode list
+```
+
+You will see something like this:
+```
+/rosout
+/teleop_turtle
+/turtlesim
+```
+
+### List of topics
+
+```
+rostopic list
+```
+
+### Information about the topics
+
+```
+rostopic info /turtle1/cmd_vel
+```
+
+An example of the output on the terminal promt is as follows:
+
+```
+Type: geometry_msgs/Twist
+
+Publishers:
+ * /teleop_turtle (http://fauxtales:34597/)
+
+Subscribers:
+ * /turtlesim (http://fauxtales:44061/)
+```
+
+## Information about the type of message
+
+
   519  rostopic info /turtle1/cmd_vel 
   520  rosmsg info geometry_msgs/Twist
   521  rosed geometry_msgs Twist.msg 
