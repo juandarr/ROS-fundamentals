@@ -61,24 +61,57 @@ Subscribers:
  * /turtlesim (http://fauxtales:44061/)
 ```
 
-## Information about the type of message
+### Information about the type of message
+
+Lets explore more about the type of message used in `/turtle1/cmd_vel` rostopic. In the terminal prompt issue the following command:
+```
+rosmsg info geometry_msgs/Twist
+```
+
+You will see something like the following output:
+```
+geometry_msgs/Vector3 linear
+  float64 x
+  float64 y
+  float64 z
+geometry_msgs/Vector3 angular
+  float64 x
+  float64 y
+  float64 z
+```
+
+Sometime the information you will see here won't be enough to understand the associations and purpose of the topics. You can also explore the original
+message file using `rosed`.
+
+### Exploring message files with rosed
+
+First you need to set up the editor. By default the one used is VIM. Use the following instruction to add a different text editor (nano in this example). Open 
+the `~/.bashrc` file and add `export EDITOR='nano -w'` at the end of the file. Now you can source the bash file `source ~/.bashrc` and verify that the editor variable has been defined accordingly: `echo $EDITOR`. You should get the output `nano -w`.
+
+Once the setup has been completed, you can issue the following command to see contents of the message:
+
+```
+rosed geomtry_msgs Twist.msg
+```
+
+In this case, the output is:
+```
+# This expresses velocity in free space broken into its linear and angular parts.
+Vector3  linear
+Vector3  angular
+```
+ Which gives additional info with the comment on the first line.
 
 
-  519  rostopic info /turtle1/cmd_vel 
-  520  rosmsg info geometry_msgs/Twist
-  521  rosed geometry_msgs Twist.msg 
-  522  echo $EDITOR
-  523  nano ~/.bashrc
-  524  source ~/.bashhrc
-  525  source ~/.bashrc
-  526  echo $EDITOR
-  527  rosed geometry_msgs Twist.msg 
-  528  rosmsg info geometry_msgs/Vector3
-  529  rosed geometry_msgs Vector3
-  530  rosed geometry_msgs Vector3.msg
-  531  clear
-  532  ls
-  533  history 10
-  534  history 20
-  535  history 30
-  536  history 30 >> commands.md
+### Echo messages on a topic
+
+Sometimes is useful to see the message being published in real time. Use the following command to do that:
+
+```
+rostopic echo /turtle1/cmd_vel
+```
+
+
+
+
+
