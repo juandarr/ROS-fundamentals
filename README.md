@@ -111,7 +111,44 @@ Sometimes is useful to see the message being published in real time. Use the fol
 rostopic echo /turtle1/cmd_vel
 ```
 
+## Packages and Catkin workspaces
 
+A catkin workspace is an upper level directory where a series of nodes, services, dependencies and more are stored, normally as subdirectories.
+
+### How to create a catkin workspace
+First of all, create the root directory. This will work as the workspace for the packages you intend to create:
+
+```bash
+mkdir -p ~/catkin_ws/src
+```
+
+Go to the source directory,
+```bash
+cd src
+```
+
+and initialize the catkin workspace with:
+```bash
+catkin_init_workspace
+```
+
+This will create a symlink to the master cmakelist file in `/opt/ros/DISTRIBUTION/share/catkin/cmake/toplevel.cmake`, where DISTRIBUTION is your ROS distribution. In my case I am working on Melodic with Ubuntu 18.04.
+
+Now go back to the top level directory, and run the final command
+
+```bash
+catkin_make
+```
+
+This completes the process of creation of a catkin workspace. 
+
+### Add packages
+
+
+### Manage inter-package dependencies
+
+
+### How to succesfully compile
 
 
 
