@@ -271,6 +271,112 @@ rosrun simple_arm arm_mover
 
 ### ROS services
 
+A ROS service allows request/responde communication between nodes. The basic instruction used to define a service in Python is as follows:
+
+```python
+service = rospy.Service('service_name', serviceClassName, handler)
+```
+
+* `service_name` is the name of the service.
+* `serviceClassName` is the name of the class of service, this corresponds to a `srv` file that will define the kind of message(s) sent in the `request` and the `response` separated by three consecutive dashes (`---`).
+* `handler` is a method or function used to handle a request. It must return a messageClass compatible with the expected one as response. 
+
+A service can be called directly from console or defining a proxy service as follows:
+
+```python
+service_proxy = rospy.ServiceProxy('service_name', serviceClassName)
+```
+
+Once the ServiceProxy has been created we can send requests as follows:
+
+```python
+msg = serviceClassNameRequest()
+#update msg attributes here to have correct data
+response = service_proxy(msg)
+```
+
+#### Basic steps
+
+##### Creating a new service definition
+
+We need to create the `srv` folder at the root of the package:
+
+```bash
+cd ~/catkin_ws/src/simple_arm
+mkdir srv
+cd srv
+touch GoToPosition.srv
+```
+
+Now lets create the definition of the service class. Put the following content inside `GoToPosition.srv`:
+
+```bash
+float64 joint_1
+float64 joint_2
+---
+duration time_elapsed
+```
+
+##### Modify CMakeLists.txt
+
+In this case we want to add the custom services files in `srv` and add `std_msgs` as dependency:
+
+First of all ensure that the following section is uncommented and complete:
+
+```C
+find_package(catkin REQUIRED COMPONENTS
+        std_msgs
+        message_generation
+)
+```
+
+Uncomment the `add_services_files()` section:
+
+```C
+## Generate services in the 'srv' folder
+add_service_files(
+   FILES
+   GoToPosition.srv
+)
+```
+and finally make sure that `generate_messages()` is uncommented:
+
+```C
+generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+)
+```
+
+##### Modify package.xml
+
+Uncomment/add the following sections to the file:
+
+```xml
+<build_depend>message_generation</build_depend>
+<run_depend>message_runtime</run_depend>
+```
+
+##### Build the package
+
+Once these configurations have been defined, build the package:
+
+```bash
+cd ~/catkin_ws
+catkin_make
+source devel/setup.bash
+```
+
+##### Create the node
+
+```bash
+cd ~/catkin_ws/src/simple_arm/scripts
+touch arm_mover
+chmod u+x arm_mover
+```
+
+Finally add the contents, and now you can the node.
+
 ## ROS subscribe
 
 
