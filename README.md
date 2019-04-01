@@ -250,7 +250,7 @@ Now you need to give it executable permissions:
 
 ```bash
 chmod u+x arm_mover
-```
+```  
 
 Now define the personalized python code inside the file. Lets assume we already wrote the code.
 
