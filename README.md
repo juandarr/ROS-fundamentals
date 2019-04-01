@@ -205,9 +205,72 @@ roslaunch simple_arm robot_spawn.launch
 
 ## Writing ROS Nodes
 
+The following descriptions will include information about how to implement a publisher, service and subscriber using Python. Links about where to get additional information will be provided.
+
 ### ROS publish
+Publishers allow a node to send messages to a topic so that data from the node can be used in different parts of ROS. In python the instructions used to create a node are as follows:
+
+```python
+pub1 = rospy.Publisher("/topic_name", message_type, queue_size=size)
+```
+
+* `/topic_name` is the name of the topic the node will be publishing to.
+* `message_type` is the type of message sent to the topic
+* `queue_size` is used to define whether the publisher will be syncronous or asyncronous. When `queue_size` is not defined or none, the publisher is syncronous, this means that when the topic is being published to a different publisher the current publisher will be blocked. When a `queue_size` value is defined, it will store messages in a buffer until it is full, then will try to free the buffer as soon as the topic is available to receive messages. This is also know as the asyncronous mode of the publisher.
+
+Once the publisher has been created, the following command can be used to publish a `message`:
+
+```python
+pb1.publish(message)
+```
+
+[Here](http://docs.ros.org/kinetic/api/rospy/html/rospy.topics.Publisher-class.html) you will find more info about ROS publishers.
+
+
+#### Basic steps
+
+##### Add the scripts directory
+
+In this example we have a package named `simple_arm`. To create nodes in python we have to create a folder called `scripts` in its root. 
+
+```bash
+cd ~/catkin_ws/src/simple_arm
+mkdir scripts
+```
+
+##### Creating a new script
+Now go to the scripts folder, and create a new node file:
+
+```bash
+cd scripts
+touch arm_mover
+```
+
+Now you need to give it executable permissions:
+
+```bash
+chmod u+x arm_mover
+```
+
+Now define the personalized python code inside the file. Lets assume we already wrote the code.
+
+##### Make, source file and rosrun
+
+Go back to the workspace upper level:
+
+```bash
+cd ~/catkin_ws
+catkin_make
+```
+Source the setup.bash script and finally you can run the node:
+
+```bash
+source devel/setup.bash
+rosrun simple_arm arm_mover
+```
 
 ### ROS services
 
+## ROS subscribe
 
 
