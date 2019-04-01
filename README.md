@@ -375,8 +375,54 @@ touch arm_mover
 chmod u+x arm_mover
 ```
 
-Finally add the contents, and now you can the node.
+Finally add the contents, and now you can run the node.
+
+##### Launching the project with the new service
+
+Edit the launcher file in the folder `launch` of the package and add the following block of instructions:
+
+```xml
+<!-- The arm mover node -->
+<node name="arm_mover" type="arm_mover" pkg="simple_arm">
+  <rosparam>
+    min_joint_1_angle: 0
+    max_joint_1_angle: 1.57
+    min_joint_2_angle: 0
+    max_joint_2_angle: 1.57
+  </rosparam>
+</node>
+```
 
 ## ROS subscribe
 
+A subscriber allows a node to receive messages from a topic. Here is the instruction used in Python to define one:
 
+```python
+sub1 = rospy.Subscriber("/topic_name", message_type, callback_function)
+```
+
+* `/topic_name` is the topic name the node will subscribe to.
+* `message_type` is the type of message expected
+* `callback_function` is a function that does something when messages are received from the topic. In contrast with the hanlder function in a service, this calllback function doesn't have to return
+any specific info.
+
+#### Basic steps
+
+##### Create node look_away
+
+```bash
+cd ~/catkin_ws/src/simple_arm/scripts
+touch look_away
+chmod u+x look_away
+```
+
+##### Update the launch file
+
+We want the subscriber to do something when receiving messages. Lets change the launch file to launch the node from the start of a process:
+
+```xml
+<!-- The look away node -->
+<node name="look_away" type="look_away" pkg="simple_arm"/>
+```
+
+After this you can build the project, source the setup file and launch the project. Check that the service/publisher/action are active using `rosnode`, `rostopic`, `rosservice` and their subcommands.
